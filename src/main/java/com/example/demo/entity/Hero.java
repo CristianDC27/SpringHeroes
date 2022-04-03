@@ -1,14 +1,13 @@
 package com.example.demo.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -25,8 +24,7 @@ public class Hero {
     @NotBlank(message = "Name is mandatory")
     private String name;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
-    @OrderColumn
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Superpoder> superpoderes;
 
     public Hero() {
@@ -34,12 +32,6 @@ public class Hero {
 
     public Hero(String name) {
         this.name = name;
-        //this.superpoderes = new ArrayList<Superpoder>();
-    }
-
-    public Hero(String name, List<Superpoder> superpoderes) {
-        this.name = name;
-        this.superpoderes = superpoderes;
     }
 
     public long getId() {
